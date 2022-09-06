@@ -44,18 +44,6 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MyList() {
-    val myItems = remember {
-        List(10000) {
-            ItemData(
-                id = it,
-                title = "List item #$it",
-                description = "Description",
-                status = listOf("Open", "Closed", "Pending", "In Review", "Canceled").random(),
-                date = LocalDate.ofEpochDay(Random.nextLong(-999999999, 999999999)).toString(),
-                showButton = Random.nextBoolean(),
-            )
-        }
-    }
     val cashflowItems = remember { List(10_000) { SampleData.ComplexData(index = it) } }
     val state = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
@@ -78,25 +66,12 @@ fun MyList() {
                 }
                 Button(onClick = {
                     coroutineScope.launch {
-                        state.animateScrollToItem(myItems.lastIndex)
+                        state.animateScrollToItem(cashflowItems.lastIndex)
                     }
                 }) {
                     Text(text = "Scroll to bottom")
                 }
             }
-
-            // LazyColumn(
-            //     state = state,
-            //     modifier = Modifier
-            //         .fillMaxSize()
-            // ) {
-            //     items(myItems, key = { it.id }) {
-            //         Item(
-            //             itemData = it,
-            //             onClick = { Log.d("ITEM", "clicked $it") },
-            //         )
-            //     }
-            // }
 
             LazyColumn(
                 state = state,
@@ -117,49 +92,6 @@ fun MyList() {
     }
 }
 
-@Composable
-private fun Item(
-    itemData: ItemData,
-    onClick: () -> Unit,
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable(onClick = onClick)
-            .padding(16.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
-    ) {
-        Column {
-            Text(
-                text = itemData.title,
-                style = MaterialTheme.typography.body1,
-            )
-            Text(
-                text = itemData.description,
-                style = MaterialTheme.typography.body2,
-                color = MaterialTheme.colors.secondary,
-            )
-        }
-        Column(horizontalAlignment = Alignment.End) {
-            Text(
-                text = itemData.status,
-                style = MaterialTheme.typography.subtitle1,
-                color = MaterialTheme.colors.primary,
-            )
-            Text(
-                text = itemData.date,
-                style = MaterialTheme.typography.subtitle2,
-                color = MaterialTheme.colors.secondaryVariant,
-            )
-        }
-        if (itemData.showButton) {
-            TextButton(onClick = { Log.d("ITEM", "button click") }) {
-                Text(text = "Delete", color = MaterialTheme.colors.error)
-            }
-        }
-    }
-}
-
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
@@ -167,12 +99,3 @@ fun DefaultPreview() {
         MyList()
     }
 }
-
-data class ItemData(
-    val id: Int,
-    val title: String,
-    val description: String,
-    val status: String,
-    val date: String,
-    val showButton: Boolean,
-)
