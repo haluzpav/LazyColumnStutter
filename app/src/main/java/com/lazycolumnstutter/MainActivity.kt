@@ -56,7 +56,6 @@ fun MyList() {
             )
         }
     }
-    val cashflowItems = remember { List(10_000) { SampleData.ComplexData(index = it) } }
     val state = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
 
@@ -85,31 +84,15 @@ fun MyList() {
                 }
             }
 
-            // LazyColumn(
-            //     state = state,
-            //     modifier = Modifier
-            //         .fillMaxSize()
-            // ) {
-            //     items(myItems, key = { it.id }) {
-            //         Item(
-            //             itemData = it,
-            //             onClick = { Log.d("ITEM", "clicked $it") },
-            //         )
-            //     }
-            // }
-
             LazyColumn(
                 state = state,
                 modifier = Modifier
                     .fillMaxSize()
             ) {
-                items(
-                    items = cashflowItems,
-                    key = ComplexData::id,
-                ) {
-                    ComplexItem(
-                        data = it,
-                        onClick = {},
+                items(myItems, key = { it.id }) {
+                    Item(
+                        itemData = it,
+                        onClick = { Log.d("ITEM", "clicked $it") },
                     )
                 }
             }
