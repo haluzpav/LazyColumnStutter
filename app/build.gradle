@@ -46,6 +46,15 @@ android {
     }
 }
 
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+    kotlinOptions.freeCompilerArgs = [
+            "-P",
+            "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=metrics",
+            "-P",
+            "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=reports",
+    ]
+}
+
 dependencies {
 
     String compose_version = '1.2.1'

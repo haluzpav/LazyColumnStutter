@@ -132,7 +132,6 @@ fun ComplexItem(
 
         TypeBadge(
             text = data.type,
-            iconPainter = null,
             color = data.typeColor,
             modifier = Modifier
                 .constrainAs(type) {
@@ -169,7 +168,6 @@ fun ComplexItem(
 @Composable
 private fun TypeBadge(
     text: String,
-    iconPainter: Painter?,
     color: Long?,
     modifier: Modifier = Modifier,
 ) {
@@ -179,7 +177,6 @@ private fun TypeBadge(
             color = MaterialTheme.colors.secondary,
             badgeStyle = BadgeStyle.Small,
             modifier = modifier,
-            iconPainter = iconPainter,
         )
     } else {
         Badge(
@@ -187,7 +184,6 @@ private fun TypeBadge(
             color = Color(color),
             badgeStyle = BadgeStyle.Small,
             modifier = modifier,
-            iconPainter = iconPainter,
         )
     }
 }
